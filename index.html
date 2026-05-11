@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gaststätte Bavaria München – Bayerisches Gasthaus seit Jahrzehnten</title>
+  <meta name="description" content="Gemütliches bayerisches Gasthaus in München. Bayrische Schmankerl, Augustiner Bier, herzliche Atmosphäre. Täglich geöffnet 10:00–01:00 Uhr. Bayerstr. 81, München.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f5ead2;
+      --parchment: #ede0c0;
+      --dark-brown: #2c1a0e;
+      --mid-brown: #5a3317;
+      --warm-brown: #8b4513;
+      --gold: #c8922a;
+      --gold-light: #e8b84b;
+      --white-blue: #d6e8f5;
+      --blue-white: #0d5fa8;
+      --green: #2d6a1f;
+      --red: #b22222;
+      --text: #2c1a0e;
+      --shadow: rgba(44,26,14,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== DIAMOND PATTERN BACKGROUND ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(200,146,42,0.04) 0, rgba(200,146,42,0.04) 1px, transparent 0, transparent 50%),
+        repeating-linear-gradient(-45deg, rgba(200,146,42,0.04) 0, rgba(200,146,42,0.04) 1px, transparent 0, transparent 50%);
+      background-size: 30px 30px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: var(--dark-brown);
+      border-bottom: 3px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      box-shadow: 0 2px 16px var(--shadow);
+    }
+
+    .nav-logo {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: 1.7rem;
+      color: var(--gold-light);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--cream);
+      transition: all 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 100px 2rem 4rem;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(160deg, rgba(44,26,14,0.85) 0%, rgba(90,51,23,0.7) 50%, rgba(44,26,14,0.9) 100%),
+        url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Marienplatz_Neues_Rathaus.jpg/1280px-Marienplatz_Neues_Rathaus.jpg') center/cover no-repeat;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 1.2s ease both;
+    }
+
+    .hero-pretitle {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+
+    .hero-title {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      color: var(--cream);
+      line-height: 1;
+      text-shadow: 0 4px 32px rgba(0,0,0,0.5);
+      opacity: 0;
+      animation: fadeUp 1s 0.4s ease both;
+    }
+
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--gold-light);
+      margin-top: 1rem;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+
+    .hero-divider {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.5rem auto;
+      opacity: 0;
+      animation: fadeUp 1s 0.7s ease both;
+    }
+
+    .hero-info {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.8s ease both;
+    }
+
+    .hero-info-item {
+      color: var(--cream);
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-info-item .icon { font-size: 1.1rem; }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 2.5rem;
+      padding: 0.9rem 2.4rem;
+      background: var(--gold);
+      color: var(--dark-brown);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      box-shadow: 0 4px 24px rgba(200,146,42,0.35);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      opacity: 0;
+      animation: fadeUp 1s 1s ease both;
+    }
+    .hero-cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(200,146,42,0.5);
+    }
+
+    /* ===== BAVARIAN BANNER DECORATION ===== */
+    .banner-decor {
+      width: 100%;
+      height: 28px;
+      background: repeating-linear-gradient(90deg,
+        var(--blue-white) 0px, var(--blue-white) 28px,
+        var(--white-blue) 28px, var(--white-blue) 56px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-title {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--mid-brown);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .section-line::before, .section-line::after {
+      content: '';
+      flex: 1;
+      max-width: 180px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .section-line::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .section-line span {
+      color: var(--gold);
+      font-size: 1.2rem;
+    }
+
+    /* ===== ÜBER UNS ===== */
+    #ueber-uns {
+      background: var(--dark-brown);
+      color: var(--cream);
+    }
+    #ueber-uns .section-title { color: var(--gold-light); }
+
+    .ueber-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .ueber-text p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: var(--parchment);
+      margin-bottom: 1.2rem;
+    }
+
+    .ueber-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(200,146,42,0.25);
+      border-radius: 4px;
+      padding: 1.2rem;
+      text-align: center;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .feature-card:hover {
+      background: rgba(200,146,42,0.1);
+      border-color: var(--gold);
+    }
+    .feature-card .feat-icon { font-size: 1.8rem; display: block; margin-bottom: 0.5rem; }
+    .feature-card h4 { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-light); }
+
+    .ueber-image-stack {
+      position: relative;
+    }
+
+    .img-card {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      border: 3px solid var(--gold);
+    }
+    .img-card img { width: 100%; height: 280px; object-fit: cover; display: block; }
+    .img-caption {
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(245,234,210,0.5);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* ===== SPEISEKARTE ===== */
+    #speisekarte { background: var(--parchment); }
+
+    .menu-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .menu-tab {
+      padding: 0.55rem 1.3rem;
+      background: transparent;
+      border: 2px solid var(--mid-brown);
+      color: var(--mid-brown);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .menu-tab:hover, .menu-tab.active {
+      background: var(--mid-brown);
+      color: var(--cream);
+    }
+
+    .menu-panel { display: none; }
+    .menu-panel.active { display: block; animation: fadeIn 0.4s ease; }
+
+    .menu-items {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.9rem 0;
+      border-bottom: 1px dashed rgba(90,51,23,0.25);
+      gap: 1rem;
+      transition: background 0.15s;
+    }
+    .menu-item:hover { background: rgba(200,146,42,0.06); margin: 0 -0.5rem; padding: 0.9rem 0.5rem; }
+
+    .menu-item-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--dark-brown);
+      font-weight: 600;
+    }
+    .menu-item-desc {
+      font-size: 0.8rem;
+      color: var(--warm-brown);
+      display: block;
+      margin-top: 0.2rem;
+      font-style: italic;
+    }
+    .menu-item-price {
+      font-weight: 700;
+      color: var(--mid-brown);
+      white-space: nowrap;
+      font-size: 1rem;
+    }
+
+    /* ===== FOTOS ===== */
+    #fotos { background: var(--cream); }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .photo-item {
+      border-radius: 4px;
+      overflow: hidden;
+      border: 2px solid rgba(200,146,42,0.3);
+      box-shadow: 0 4px 20px var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+    .photo-item:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: 0 12px 40px rgba(44,26,14,0.25);
+      border-color: var(--gold);
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s;
+    }
+    .photo-item:hover img { transform: scale(1.04); }
+
+    .photo-caption {
+      text-align: center;
+      font-size: 0.72rem;
+      color: rgba(90,51,23,0.6);
+      padding: 0.5rem 0.3rem 0.6rem;
+      font-style: italic;
+      background: var(--parchment);
+    }
+
+    /* ===== ANFAHRT & KONTAKT ===== */
+    #anfahrt { background: var(--dark-brown); color: var(--cream); }
+    #anfahrt .section-title { color: var(--gold-light); }
+
+    .anfahrt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .kontakt-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,146,42,0.3);
+      border-radius: 4px;
+      padding: 2rem;
+    }
+
+    .kontakt-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(200,146,42,0.3);
+      padding-bottom: 0.8rem;
+    }
+
+    .kontakt-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+    .kontakt-row .ki { font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
+    .kontakt-row div { font-size: 0.95rem; color: var(--parchment); line-height: 1.6; }
+    .kontakt-row a { color: var(--gold-light); text-decoration: none; }
+    .kontakt-row a:hover { text-decoration: underline; }
+
+    .oeffnung-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+    .oeffnung-table td {
+      padding: 0.4rem 0;
+      font-size: 0.9rem;
+      color: var(--parchment);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .oeffnung-table td:last-child { text-align: right; color: var(--gold-light); font-weight: 700; }
+
+    .map-container {
+      border-radius: 4px;
+      overflow: hidden;
+      border: 3px solid var(--gold);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 360px;
+      display: block;
+      border: none;
+    }
+
+    /* ===== FACEBOOK ===== */
+    #social { background: var(--parchment); }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .fb-embed-wrap {
+      border: 2px solid rgba(200,146,42,0.4);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    .fb-embed-wrap iframe {
+      width: 100%;
+      min-height: 400px;
+      display: block;
+      border: none;
+    }
+
+    .bewertungen { }
+    .bewertungen h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--mid-brown);
+      margin-bottom: 1.5rem;
+    }
+
+    .review-card {
+      background: white;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: transform 0.2s;
+    }
+    .review-card:hover { transform: translateX(4px); }
+    .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.4rem; }
+    .review-text { font-style: italic; color: var(--text); line-height: 1.6; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .review-author { font-size: 0.8rem; color: var(--warm-brown); font-weight: 700; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark-brown);
+      color: var(--parchment);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      border-top: 3px solid var(--gold);
+    }
+
+    .footer-logo {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: 2rem;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    footer p {
+      font-size: 0.82rem;
+      color: rgba(237,224,192,0.55);
+      margin-top: 0.3rem;
+    }
+
+    footer a { color: var(--gold-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ===== DECORATIVE DIVIDER ===== */
+    .ornament {
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin: 0;
+      line-height: 1;
+    }
+
+    /* ===== MOBILE NAV ===== */
+    @media (max-width: 900px) {
+      .nav-links {
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: var(--dark-brown);
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 0;
+        border-bottom: 2px solid var(--gold);
+        transform: translateY(-110%);
+        transition: transform 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .nav-links.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+      }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: block;
+        padding: 0.85rem 2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .hamburger { display: flex; }
+
+      .ueber-grid, .anfahrt-grid, .social-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .ueber-features { grid-template-columns: 1fr 1fr; }
+      .photo-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 580px) {
+      .hero-info { flex-direction: column; gap: 0.8rem; align-items: center; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .ueber-features { grid-template-columns: 1fr; }
+      .menu-tabs { gap: 0.35rem; }
+      .menu-tab { font-size: 0.72rem; padding: 0.45rem 0.9rem; }
+    }
+
+    /* scrollbar style */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--dark-brown); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+    /* pulse on cta */
+    @keyframes pulse-gold {
+      0%, 100% { box-shadow: 0 4px 24px rgba(200,146,42,0.35); }
+      50% { box-shadow: 0 4px 40px rgba(200,146,42,0.65); }
+    }
+    .hero-cta { animation: fadeUp 1s 1s ease both, pulse-gold 3s 2s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Bavaria</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#ueber-uns" onclick="closeNav()">Über uns</a></li>
+    <li><a href="#speisekarte" onclick="closeNav()">Speisekarte</a></li>
+    <li><a href="#fotos" onclick="closeNav()">Fotos</a></li>
+    <li><a href="#social" onclick="closeNav()">Bewertungen</a></li>
+    <li><a href="#anfahrt" onclick="closeNav()">Anfahrt</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleNav()" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-pretitle">✦ Herzlich Willkommen ✦</p>
+    <h1 class="hero-title">Gaststätte Bavaria</h1>
+    <p class="hero-subtitle">Bayerisches Gasthaus mitten im Herzen Münchens</p>
+    <div class="hero-divider"></div>
+    <div class="hero-info">
+      <span class="hero-info-item"><span class="icon">📍</span> Bayerstr. 81, 80335 München</span>
+      <span class="hero-info-item"><span class="icon">🕙</span> Mo–So: 10:00–01:00 Uhr</span>
+      <span class="hero-info-item"><span class="icon">📞</span> 089 / 53 31 75</span>
+    </div>
+    <a href="#speisekarte" class="hero-cta">🍺 Zur Speisekarte</a>
+  </div>
+</section>
+
+<div class="banner-decor"></div>
+
+<!-- ===== ÜBER UNS ===== -->
+<section id="ueber-uns">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Über uns</h2>
+    <div class="section-line reveal"><span>✦</span></div>
+    <div class="ueber-grid">
+      <div class="ueber-text reveal">
+        <p>Willkommen in der <strong>Gaststätte Bavaria</strong> – einem gemütlichen, hell und freundlich eingerichteten bayerischen Gasthaus, mitten im Herzen Münchens gelegen, nur wenige Gehminuten vom Hauptbahnhof entfernt.</p>
+        <p>Neben rustikaler Atmosphäre und typisch bayerischen Schmankerln bieten wir auch internationale Küche an – alles zu sehr vernünftigen Preisen. Unsere Küche verwöhnt Sie mit original bayerischen Gerichten, von der Leberknödelsuppe bis zum Schweinebraten mit Knödel.</p>
+        <p>Dazu fließt das frische <strong>Augustiner Bier</strong> vom Fass – eine Münchner Tradition, der wir mit Herz und Seele treu geblieben sind.</p>
+        <div class="ueber-features">
+          <div class="feature-card">
+            <span class="feat-icon">🍺</span>
+            <h4>Augustiner Bier</h4>
+          </div>
+          <div class="feature-card">
+            <span class="feat-icon">🥩</span>
+            <h4>Bayrische Küche</h4>
+          </div>
+          <div class="feature-card">
+            <span class="feat-icon">💶</span>
+            <h4>Faire Preise</h4>
+          </div>
+          <div class="feature-card">
+            <span class="feat-icon">🏠</span>
+            <h4>Gemütlich & Herzlich</h4>
+          </div>
+        </div>
+      </div>
+      <div class="ueber-image-stack reveal">
+        <div class="img-card">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Augustinerkeller_M%C3%BCnchen_Innen.jpg/1280px-Augustinerkeller_M%C3%BCnchen_Innen.jpg"
+            alt="Bayerisches Gasthaus Innenraum"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Gaststätte_in_München.jpg/800px-Gaststätte_in_München.jpg'"
+          />
+        </div>
+        <p class="img-caption">hier könnten Ihre Bilder sein</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="banner-decor"></div>
+
+<!-- ===== SPEISEKARTE ===== -->
+<section id="speisekarte">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Speisekarte</h2>
+    <div class="section-line reveal"><span>✦</span></div>
+
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" onclick="showTab('bayrisch')">🥨 Bayrische Schmankerl</button>
+      <button class="menu-tab" onclick="showTab('schnitzel')">🍽️ Aus der Pfanne</button>
+      <button class="menu-tab" onclick="showTab('suppen')">🍲 Suppen & Salate</button>
+      <button class="menu-tab" onclick="showTab('grill')">🔥 Grill & Steaks</button>
+      <button class="menu-tab" onclick="showTab('dessert')">🍮 Desserts</button>
+      <button class="menu-tab" onclick="showTab('bier')">🍺 Biere & Getränke</button>
+    </div>
+
+    <!-- Bayrische Schmankerl -->
+    <div class="menu-panel active" id="tab-bayrisch">
+      <div class="menu-items">
+        <div class="menu-item"><div><span class="menu-item-name">Warmer Leberkäse mit Ei</span><span class="menu-item-desc">mit Kartoffelsalat</span></div><span class="menu-item-price">11,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">6 Stück Nürnberger Rostbratwürste</span><span class="menu-item-desc">mit Salzkartoffeln und Sauerkraut</span></div><span class="menu-item-price">13,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Ofenfrischer Schweinebraten</span><span class="menu-item-desc">mit Kartoffelknödel und Blaukraut</span></div><span class="menu-item-price">17,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Eisbein »frisch gebrüht«</span><span class="menu-item-desc">mit Salzkartoffeln und Sauerkraut</span></div><span class="menu-item-price">15,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Bayerischer Wurstsalat</span><span class="menu-item-desc">mit Brot</span></div><span class="menu-item-price">12,00 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Schweizer Wurstsalat</span><span class="menu-item-desc">mit Brot</span></div><span class="menu-item-price">12,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Tiroler Gröstl</span><span class="menu-item-desc">Hausgemachte Spezialität</span></div><span class="menu-item-price">12,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Bavaria Spieß</span><span class="menu-item-desc">in Pfefferrahmsauce mit Rösti – Spezialität des Hauses</span></div><span class="menu-item-price">17,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Hausgemachter Gulasch</span><span class="menu-item-desc">mit Nudeln</span></div><span class="menu-item-price">14,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Hackbraten</span><span class="menu-item-desc">mit Spätzle und Salat</span></div><span class="menu-item-price">13,90 €</span></div>
+      </div>
+    </div>
+
+    <!-- Aus der Pfanne -->
+    <div class="menu-panel" id="tab-schnitzel">
+      <div class="menu-items">
+        <div class="menu-item"><div><span class="menu-item-name">Wiener Schnitzel vom Kalb</span><span class="menu-item-desc">mit Pommes und Salat</span></div><span class="menu-item-price">19,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Jägerschnitzel vom Schwein</span><span class="menu-item-desc">mit Spätzle und Salat</span></div><span class="menu-item-price">17,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Zigeunerschnitzel vom Schwein</span><span class="menu-item-desc">mit Salzkartoffeln und Salat</span></div><span class="menu-item-price">16,00 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Cordon Bleu</span><span class="menu-item-desc">mit Pommes und Salat</span></div><span class="menu-item-price">17,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Riesenschnitzel vom Schwein</span><span class="menu-item-desc">mit Kartoffelsalat oder Pommes und Salat</span></div><span class="menu-item-price">17,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Schnitzel »BAVARIA«</span><span class="menu-item-desc">Schweineschnitzel mit Paprikarahmsauce und Käse überbacken, Bratkartoffeln und Salat</span></div><span class="menu-item-price">17,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Schwabenteller</span><span class="menu-item-desc">Schweinefilet mit Pilzrahmsauce und Käse überbacken, Bratkartoffeln und Salat</span></div><span class="menu-item-price">18,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Züricher Sahnegeschnetzeltes</span><span class="menu-item-desc">Von Pute oder Kalb, mit Spätzle und Salat</span></div><span class="menu-item-price">18,00 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Käsespätzle</span><span class="menu-item-desc">mit Salat</span></div><span class="menu-item-price">10,50 €</span></div>
+      </div>
+    </div>
+
+    <!-- Suppen & Salate -->
+    <div class="menu-panel" id="tab-suppen">
+      <div class="menu-items">
+        <div class="menu-item"><div><span class="menu-item-name">Leberknödelsuppe</span></div><span class="menu-item-price">5,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Leberspätzlesuppe</span></div><span class="menu-item-price">5,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Gulaschsuppe</span><span class="menu-item-desc">mit Brot</span></div><span class="menu-item-price">8,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Nudelsuppe</span></div><span class="menu-item-price">4,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Pfannkuchensuppe</span></div><span class="menu-item-price">4,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Gemischter Salat</span></div><span class="menu-item-price">6,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Bauernsalat</span><span class="menu-item-desc">mit Schafskäse und Hausdressing</span></div><span class="menu-item-price">12,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Nizza-Salat</span><span class="menu-item-desc">mit Thunfisch und gekochtem Ei</span></div><span class="menu-item-price">12,50 €</span></div>
+      </div>
+    </div>
+
+    <!-- Grill & Steaks -->
+    <div class="menu-panel" id="tab-grill">
+      <div class="menu-items">
+        <div class="menu-item"><div><span class="menu-item-name">Cevapcici</span><span class="menu-item-desc">mit Pommes und Djuvedreis – Hackfleischröllchen vom Rind und Schwein</span></div><span class="menu-item-price">14,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Grillteller</span><span class="menu-item-desc">Verschiedenes vom Grill mit Djuvedreis und Pommes Frites</span></div><span class="menu-item-price">18,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Beheizte Grillplatte für Zwei</span><span class="menu-item-desc">mit Djuvedreis und Pommes</span></div><span class="menu-item-price">36,80 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Lammkoteletts</span><span class="menu-item-desc">mit Bratkartoffeln und Salat</span></div><span class="menu-item-price">19,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Rumpfsteak 250g</span><span class="menu-item-desc">mit Bratkartoffeln und Salat</span></div><span class="menu-item-price">23,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Beefsteak</span><span class="menu-item-desc">mit Bratkartoffeln</span></div><span class="menu-item-price">27,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Zwiebelrostbraten</span><span class="menu-item-desc">Rinderlende 250g, mit Bratkartoffeln und Salat</span></div><span class="menu-item-price">19,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Holzfäller-Steak</span><span class="menu-item-desc">Schweinennackensteak, mit Bratkartoffeln und Salat</span></div><span class="menu-item-price">17,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Forelle Müllerin Art</span><span class="menu-item-desc">mit Salzkartoffeln</span></div><span class="menu-item-price">16,50 €</span></div>
+      </div>
+    </div>
+
+    <!-- Desserts -->
+    <div class="menu-panel" id="tab-dessert">
+      <div class="menu-items">
+        <div class="menu-item"><div><span class="menu-item-name">Kaiserschmarrn</span><span class="menu-item-desc">mit Apfelmus</span></div><span class="menu-item-price">8,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Hausgemachter Strudel</span></div><span class="menu-item-price">7,00 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Palatschinken</span><span class="menu-item-desc">mit Konfitüre oder Zimt/Puderzucker/Walnuss</span></div><span class="menu-item-price">6,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Spezial-Palatschinken</span><span class="menu-item-desc">gefüllt mit Eis</span></div><span class="menu-item-price">8,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Gemischtes Eis</span></div><span class="menu-item-price">6,50 €</span></div>
+      </div>
+    </div>
+
+    <!-- Biere & Getränke -->
+    <div class="menu-panel" id="tab-bier">
+      <div class="menu-items">
+        <div class="menu-item"><div><span class="menu-item-name">Augustiner Hell vom Fass</span><span class="menu-item-desc">0,5 L</span></div><span class="menu-item-price">3,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Augustiner Edelstoff</span><span class="menu-item-desc">0,5 L</span></div><span class="menu-item-price">4,00 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Augustiner Weißbier / Dunkles Weißbier</span><span class="menu-item-desc">0,5 L</span></div><span class="menu-item-price">4,10 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Dunkles Bier</span><span class="menu-item-desc">0,5 L</span></div><span class="menu-item-price">4,10 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Maß Helles / Radler</span><span class="menu-item-desc">1,0 L</span></div><span class="menu-item-price">7,80 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Radler</span><span class="menu-item-desc">0,5 L</span></div><span class="menu-item-price">3,70 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Rotwein / Weißwein (Schoppen)</span><span class="menu-item-desc">0,2 L – Plavac, Chianti, Laski Riesling, Pinot Grigio u.v.m.</span></div><span class="menu-item-price">3,90 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Augustiner Tropfen (Schnaps)</span><span class="menu-item-desc">2 cl</span></div><span class="menu-item-price">3,50 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Kaffee</span></div><span class="menu-item-price">2,40 €</span></div>
+        <div class="menu-item"><div><span class="menu-item-name">Glühwein</span></div><span class="menu-item-price">4,50 €</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="banner-decor"></div>
+
+<!-- ===== FOTOS ===== -->
+<section id="fotos">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Eindrücke</h2>
+    <div class="section-line reveal"><span>✦</span></div>
+    <div class="photo-grid">
+
+      <div class="photo-item reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Augustinerkeller_M%C3%BCnchen_Innen.jpg/800px-Augustinerkeller_M%C3%BCnchen_Innen.jpg"
+          alt="Bayerische Gaststätte Innenraum"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Gasthaus_Bayern.jpg/640px-Gasthaus_Bayern.jpg'">
+        <div class="photo-caption">hier könnten Ihre Bilder sein</div>
+      </div>
+
+      <div class="photo-item reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Schweinebraten_mit_Kn%C3%B6del_und_Blaukraut.jpg/800px-Schweinebraten_mit_Kn%C3%B6del_und_Blaukraut.jpg"
+          alt="Schweinebraten mit Knödel"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Essen_Gaststätte.jpg/640px-Essen_Gaststätte.jpg'">
+        <div class="photo-caption">hier könnten Ihre Bilder sein</div>
+      </div>
+
+      <div class="photo-item reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Weisswurst_2.jpg/800px-Weisswurst_2.jpg"
+          alt="Weißwurst – bayerische Tradition"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Bayern.jpg/640px-Bayern.jpg'">
+        <div class="photo-caption">hier könnten Ihre Bilder sein</div>
+      </div>
+
+      <div class="photo-item reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Augustiner_Bier.jpg/800px-Augustiner_Bier.jpg"
+          alt="Augustiner Bier vom Fass"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Augustiner.jpg/640px-Augustiner.jpg'">
+        <div class="photo-caption">hier könnten Ihre Bilder sein</div>
+      </div>
+
+      <div class="photo-item reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Marienplatz_Neues_Rathaus_2.jpg/800px-Marienplatz_Neues_Rathaus_2.jpg"
+          alt="München Stadtblick"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Marienplatz_Neues_Rathaus.jpg/640px-Marienplatz_Neues_Rathaus.jpg'">
+        <div class="photo-caption">hier könnten Ihre Bilder sein</div>
+      </div>
+
+      <div class="photo-item reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Kaiserschmarrn_%28cropped%29.jpg/800px-Kaiserschmarrn_%28cropped%29.jpg"
+          alt="Kaiserschmarrn mit Apfelmus"
+          onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Kaiserschmarrn.jpg/640px-Kaiserschmarrn.jpg'">
+        <div class="photo-caption">hier könnten Ihre Bilder sein</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="banner-decor"></div>
+
+<!-- ===== SOCIAL & BEWERTUNGEN ===== -->
+<section id="social">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Was unsere Gäste sagen</h2>
+    <div class="section-line reveal"><span>✦</span></div>
+
+    <div class="social-grid">
+      <!-- Facebook Embed -->
+      <div class="reveal">
+        <h3 style="font-family:'Playfair Display',serif; color:var(--mid-brown); margin-bottom:1rem; font-size:1.3rem;">🔵 Besuchen Sie uns auf Facebook</h3>
+        <div class="fb-embed-wrap">
+          <iframe
+            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FGastst%25C3%25A4tte-Bavaria%2F&tabs=timeline&width=500&height=400&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+            scrolling="no"
+            frameborder="0"
+            allowfullscreen="true"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            title="Gaststätte Bavaria Facebook">
+          </iframe>
+        </div>
+        <p style="font-size:0.8rem; color:var(--warm-brown); margin-top:0.7rem; font-style:italic;">
+          Falls der Facebook-Feed nicht lädt, besuchen Sie uns direkt auf
+          <a href="https://www.facebook.com/pages/Gastst%C3%A4tte-Bavaria/" target="_blank" rel="noopener" style="color:var(--blue-white);">Facebook</a>.
+        </p>
+      </div>
+
+      <!-- Bewertungen -->
+      <div class="bewertungen reveal">
+        <h3>Stimmen unserer Gäste</h3>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Nach über 20 Jahren waren wir wieder mal in München und gingen natürlich ins Bavaria. Es war immer noch gut und die Preise sind im Vergleich zu anderen Restaurants immer noch im Rahmen. Schnelle Bedienung und große Portionen. Immer wieder gerne."</p>
+          <span class="review-author">— Tripadvisor-Gast, Dezember 2025</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Wenn ich nach München fahre, komme ich immer und immer gern zum Bavaria. Das Essen ist köstlich, das Personal sehr nett – und die Preise sind günstig."</p>
+          <span class="review-author">— Tripadvisor-Gast, Dezember 2023</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">„Super leckeres Essen, Preis-Leistung super, ging sehr schnell, super nettes Personal. Gerne wieder mal!"</p>
+          <span class="review-author">— Tripadvisor-Gast, Juli 2023</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★☆</div>
+          <p class="review-text">„Gutes Preis-Leistungs-Verhältnis und tolles Bier. Ein schöner und gemütlicher Aufenthalt. Das Essen war sehr lecker und günstig, Personal freundlich."</p>
+          <span class="review-author">— Tripadvisor-Gast, September 2023</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="banner-decor"></div>
+
+<!-- ===== ANFAHRT & KONTAKT ===== -->
+<section id="anfahrt">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Anfahrt & Kontakt</h2>
+    <div class="section-line reveal"><span>✦</span></div>
+
+    <div class="anfahrt-grid">
+      <div>
+        <div class="kontakt-box reveal">
+          <h3>📋 Kontaktdaten</h3>
+          <div class="kontakt-row">
+            <span class="ki">📍</span>
+            <div>Bayerstraße 81<br>80335 München<br><em style="font-size:0.8rem; opacity:0.7">Ludwigsvorstadt</em></div>
+          </div>
+          <div class="kontakt-row">
+            <span class="ki">📞</span>
+            <div><a href="tel:+4989533175">089 / 53 31 75</a></div>
+          </div>
+          <div class="kontakt-row">
+            <span class="ki">📠</span>
+            <div>089 / 54 40 42 66</div>
+          </div>
+          <div class="kontakt-row">
+            <span class="ki">✉️</span>
+            <div><a href="mailto:gaststaette.bavaria@outlook.com">gaststaette.bavaria@outlook.com</a></div>
+          </div>
+        </div>
+
+        <div class="kontakt-box reveal" style="margin-top:1.5rem">
+          <h3>🕰️ Öffnungszeiten</h3>
+          <table class="oeffnung-table">
+            <tr><td>Montag</td><td>10:00 – 01:00 Uhr</td></tr>
+            <tr><td>Dienstag</td><td>10:00 – 01:00 Uhr</td></tr>
+            <tr><td>Mittwoch</td><td>10:00 – 01:00 Uhr</td></tr>
+            <tr><td>Donnerstag</td><td>10:00 – 01:00 Uhr</td></tr>
+            <tr><td>Freitag</td><td>10:00 – 01:00 Uhr</td></tr>
+            <tr><td>Samstag</td><td>10:00 – 01:00 Uhr</td></tr>
+            <tr><td>Sonntag</td><td>10:00 – 01:00 Uhr</td></tr>
+          </table>
+          <p style="margin-top:1rem; font-size:0.8rem; color:var(--gold-light)">✦ Kein Ruhetag – täglich für Sie da!</p>
+        </div>
+
+        <div class="kontakt-box reveal" style="margin-top:1.5rem">
+          <h3>🚌 Anreise mit ÖPNV</h3>
+          <div class="kontakt-row">
+            <span class="ki">🚇</span>
+            <div>U-Bahn: <strong>Theresienwiese</strong> (U4/U5)<br>S-Bahn: <strong>Hackerbrücke</strong></div>
+          </div>
+          <div class="kontakt-row">
+            <span class="ki">🚋</span>
+            <div>Tram 18/19: <strong>Holzkirchner Bahnhof</strong><br>Ca. 1 Gehminute vom Hauptbahnhof München (5 Minuten)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Maps -->
+      <div class="reveal">
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2661.9534782!2d11.5512!3d48.1367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x479e75f4c3a39e79%3A0x8e2cde5e5e5e5e5e!2sBayerstra%C3%9Fe+81%2C+80335+M%C3%BCnchen!5e0!3m2!1sde!2sde!4v1699999999999!5m2!1sde!2sde"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Gaststätte Bavaria München – Bayerstraße 81"
+          ></iframe>
+        </div>
+        <p style="text-align:center; margin-top:1rem; font-size:0.85rem; color:rgba(237,224,192,0.6); font-style:italic;">
+          Bayerstraße 81 · 80335 München · Nur wenige Gehminuten vom Hauptbahnhof
+        </p>
+        <div style="text-align:center; margin-top:1rem;">
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=Bayerstra%C3%9Fe+81%2C+80335+M%C3%BCnchen"
+            target="_blank"
+            rel="noopener"
+            style="display:inline-block; padding:0.75rem 2rem; background:var(--gold); color:var(--dark-brown); font-weight:700; font-size:0.85rem; letter-spacing:0.08em; text-decoration:none; border-radius:2px; text-transform:uppercase; transition:background 0.2s;"
+            onmouseover="this.style.background='#e8b84b'"
+            onmouseout="this.style.background='var(--gold)'"
+          >
+            🗺️ Route planen
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <span class="footer-logo">Gaststätte Bavaria</span>
+  <div class="banner-decor" style="width:120px; height:12px; margin:0.8rem auto; border-radius:2px;"></div>
+  <p>Bayerstraße 81 · 80335 München · Tel.: 089 / 53 31 75</p>
+  <p style="margin-top:0.3rem"><a href="mailto:gaststaette.bavaria@outlook.com">gaststaette.bavaria@outlook.com</a></p>
+  <p style="margin-top:1.2rem">© Gaststätte Bavaria München · <a href="http://www.bavaria-gaststaette.de/impressum.html" target="_blank">Impressum</a></p>
+  <p>Website-Neugestaltung – Alle Angaben ohne Gewähr</p>
+</footer>
+
+<script>
+  // ===== NAV TOGGLE =====
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  // Close nav on outside click
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('nav')) closeNav();
+  });
+
+  // ===== MENU TABS =====
+  function showTab(name) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // ===== SCROLL REVEAL =====
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // Stagger siblings
+        const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+        siblings.forEach((el, i) => {
+          el.style.transitionDelay = (i * 0.1) + 's';
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // ===== SMOOTH NAV SCROLL =====
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const id = this.getAttribute('href');
+      const el = document.querySelector(id);
+      if (el) {
+        e.preventDefault();
+        const offset = 64;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ===== NAV SCROLL EFFECT =====
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      navbar.style.boxShadow = '0 4px 24px rgba(0,0,0,0.35)';
+    } else {
+      navbar.style.boxShadow = '0 2px 16px rgba(44,26,14,0.18)';
+    }
+  });
+</script>
+
+</body>
+</html>
